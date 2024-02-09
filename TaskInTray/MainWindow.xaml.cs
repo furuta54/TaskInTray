@@ -24,5 +24,10 @@ namespace TaskInTray
         {
             InitializeComponent();
         }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
     }
 }
