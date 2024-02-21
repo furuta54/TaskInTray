@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskInTray"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Deactivated="Window_Deactivated">
-    <Grid>
-        
-    </Grid>
+        Title="TaskInTray" ShowInTaskbar="False" SizeToContent="WidthAndHeight"
+        Closing="Window_Closing" Deactivated="Window_Deactivated" KeyDown="Window_KeyDown">
+    <Window.DataContext>
+        <local:ViewModel />
+    </Window.DataContext>
+    <DockPanel LastChildFill="True" Margin="10">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0 10 0 0">
+            <TextBox Text="{Binding TextTaskName}" Width="300" />
+            <TextBlock Text="期限" VerticalAlignment="Center" Margin="10 0 0 0" />
+            <DatePicker SelectedDate="{Binding SelectedTaskDate}" Margin="10 0 0 0" />
+            <Button Command="{Binding CommandAddTask}" Content="追加" Width="60" Margin="10 0 0 0" />
+        </StackPanel>
+        <ItemsControl ItemsSource="{Binding TaskDataList}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsCompleted}" Width="20" />
+                        <TextBlock Text="{Binding Name}" Width="50" />
+                        <TextBlock Text="{Binding DeadlineDate, StringFormat=yyyy/MM/dd}" Width="140" />
+                        <TextBlock Text="{Binding Label}" Width="200" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </DockPanel>
 </Window>
